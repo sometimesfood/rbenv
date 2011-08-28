@@ -1,0 +1,18 @@
+Source: rbenv
+Section: ruby
+Priority: optional
+Maintainer: Sebastian Boehm <sebastian@sometimesfood.org>
+Build-Depends: debhelper (>= 7)
+Standards-Version: 3.9.1
+Homepage: https://github.com/sstephenson/rbenv
+Vcs-Git: git://github.com/sometimesfood/rbenv.git
+Vcs-Browser: https://github.com/sometimesfood/rbenv
+
+Package: rbenv
+Architecture: all
+Depends: ${misc:Depends}
+Description: simple Ruby version switcher
+ rbenv lets you switch between multiple Ruby versions.
+ .
+ It lets users change the global Ruby version on a per-user basis and
+ provides support for per-project Ruby versions.

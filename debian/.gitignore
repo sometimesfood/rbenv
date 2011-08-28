@@ -1,0 +1,6 @@
+*~
+/files
+/rbenv.debhelper.log
+/rbenv.substvars
+/rbenv/
+/patches/

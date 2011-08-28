@@ -1,0 +1,3 @@
+bin/* /usr/lib/rbenv/bin/
+libexec/* /usr/lib/rbenv/lib/
+completions/* /usr/lib/rbenv/completions/
