@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$RBENV_DEBUG" ] && set -x
 
 RBENV_VERSION_NAME="$(rbenv-version-name)"
 
@@ -13,7 +14,7 @@ else
   print_version="$(rbenv-version)"
 fi
 
-for path in "${HOME}/.rbenv/versions/"*; do
+for path in "${RBENV_ROOT}/versions/"*; do
   if [ -d "$path" ]; then
     version="${path##*/}"
 

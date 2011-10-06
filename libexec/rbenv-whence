@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$RBENV_DEBUG" ] && set -x
+
+# Provide rbenv completions
+if [ "$1" = "--complete" ]; then
+  echo --path
+  exec rbenv shims --short
+fi
 
 if [ "$1" = "--path" ]; then
   print_paths="1"

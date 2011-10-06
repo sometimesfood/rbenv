@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$RBENV_DEBUG" ] && set -x
+
+# Provide rbenv completions
+if [ "$1" = "--complete" ]; then
+  exec rbenv shims --short
+fi
 
 expand_path() {
   if [ ! -d "$1" ]; then
@@ -16,6 +22,11 @@ remove_from_path() {
   local path_to_remove="$(expand_path "$1")"
   local result=""
 
+  if [ -z "$path_to_remove" ]; then
+    echo "${PATH}"
+    return
+  fi
+
   for path in ${PATH//:/$'\n'}; do
     path="$(expand_path "$path" || true)"
     if [ -n "$path" ] && [ "$path" != "$path_to_remove" ]; then
@@ -29,19 +40,20 @@ remove_from_path() {
 RBENV_VERSION="$(rbenv-version-name)"
 RBENV_COMMAND="$1"
 
-if [ "$RBENV_VERSION" = "system" ]; then
-  PATH="$(remove_from_path "${HOME}/.rbenv/shims")"
-  RBENV_COMMAND_PATH="$(command -v "$RBENV_COMMAND")"
-else
-  RBENV_COMMAND_PATH="${HOME}/.rbenv/versions/${RBENV_VERSION}/bin/${RBENV_COMMAND}"
+if [ -z "$RBENV_COMMAND" ]; then
+  echo "usage: rbenv which COMMAND" >&2
+  exit 1
 fi
 
-shopt -s nullglob
-RBENV_WHICH_PLUGINS=(/etc/rbenv.d/which/*.bash ${HOME}/.rbenv/rbenv.d/which/*.bash)
-shopt -u nullglob
+if [ "$RBENV_VERSION" = "system" ]; then
+  PATH="$(remove_from_path "${RBENV_ROOT}/shims")"
+  RBENV_COMMAND_PATH="$(command -v "$RBENV_COMMAND")"
+else
+  RBENV_COMMAND_PATH="${RBENV_ROOT}/versions/${RBENV_VERSION}/bin/${RBENV_COMMAND}"
+fi
 
-for script in ${RBENV_WHICH_PLUGINS[@]}; do
-  source $script
+for script in $(rbenv-hooks which); do
+  source "$script"
 done
 
 if [ -x "$RBENV_COMMAND_PATH" ]; then

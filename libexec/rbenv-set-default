@@ -1,13 +1,9 @@
 #!/usr/bin/env bash
 set -e
 
-RBENV_VERSION="$1"
-if [ -z "$RBENV_VERSION" ]; then
-  echo "usage: rbenv set-default VERSION" >&2
-  exit 1
-fi
+{ echo "rbenv: warning: \`set-default' has been renamed to \`global'"
+  echo "       and will be removed in v0.3.0"
+  echo
+} >&2
 
-# Make sure the specified version is installed
-rbenv-prefix "$RBENV_VERSION" >/dev/null
-
-echo "$RBENV_VERSION" > "${HOME}/.rbenv/default"
+exec rbenv-global "$@"

@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$RBENV_DEBUG" ] && set -x
+
+# Provide rbenv completions
+if [ "$1" = "--complete" ]; then
+  exec rbenv shims --short
+fi
 
 RBENV_COMMAND="$1"
 if [ -z "$RBENV_COMMAND" ]; then
@@ -10,12 +16,8 @@ fi
 RBENV_COMMAND_PATH="$(rbenv-which "$RBENV_COMMAND")"
 RBENV_BIN_PATH="${RBENV_COMMAND_PATH%/*}"
 
-shopt -s nullglob
-RBENV_EXEC_PLUGINS=(/etc/rbenv.d/exec/*.bash ${HOME}/.rbenv/rbenv.d/exec/*.bash)
-shopt -u nullglob
-
-for script in ${RBENV_EXEC_PLUGINS[@]}; do
-  source $script
+for script in $(rbenv-hooks exec); do
+  source "$script"
 done
 
 shift 1

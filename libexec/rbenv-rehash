@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 set -e
+[ -n "$RBENV_DEBUG" ] && set -x
 
-SHIM_PATH="${HOME}/.rbenv/shims"
+SHIM_PATH="${RBENV_ROOT}/shims"
 PROTOTYPE_SHIM_PATH="${SHIM_PATH}/.rbenv-shim"
 
 # Create the shims directory if it doesn't already exist.
@@ -36,6 +37,7 @@ create_prototype_shim() {
   cat > "$PROTOTYPE_SHIM_PATH" <<SH
 #!/usr/bin/env bash
 set -e
+export RBENV_ROOT="$RBENV_ROOT"
 exec rbenv exec "\${0##*/}" "\$@"
 SH
   chmod +x "$PROTOTYPE_SHIM_PATH"
@@ -53,19 +55,21 @@ make_shims() {
   done
 }
 
+# Save the working directory.
+CUR_PATH=$PWD
+
 # Empty out the shims directory and make it the working directory.
 rm -f "$SHIM_PATH"/*
 cd "$SHIM_PATH"
 
 # Create the prototype shim, then make shims for all known binaries.
 create_prototype_shim
+shopt -s nullglob
 make_shims ../versions/*/bin/*
 
-# Find and run any plugins that might want to make shims too.
-shopt -s nullglob
-RBENV_REHASH_PLUGINS=(/etc/rbenv.d/rehash/*.bash ${HOME}/.rbenv/rbenv.d/rehash/*.bash)
-shopt -u nullglob
+# Restore the previous working directory.
+cd "$CUR_PATH"
 
-for script in ${RBENV_REHASH_PLUGINS[@]}; do
-  source $script
+for script in $(rbenv-hooks rehash); do
+  source "$script"
 done
