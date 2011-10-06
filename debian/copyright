@@ -3,11 +3,11 @@ Upstream-Name: rbenv
 Source: https://github.com/sstephenson/rbenv
 
 Files: *
-Copyright: Copyright (c) 2011 Sam Stephenson <sam@37signals.com>
+Copyright: Copyright (c) 2011 Sam Stephenson
 License: Expat
 
 Files: debian/*
-Copyright: Copyright (c) 2011 Sebastian Boehm <sebastian@sometimesfood.org>
+Copyright: Copyright (c) 2011 Sebastian Boehm
 License: Expat
  Permission is hereby granted, free of charge, to any person obtaining
  a copy of this software and associated documentation files (the
