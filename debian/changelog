@@ -1,7 +1,5 @@
-rbenv (0.1.2-1~1.gbpd0d2fb) UNRELEASED; urgency=low
+rbenv (0.2.1-1) lucid; urgency=low
 
-  ** SNAPSHOT build @d0d2fb1a7008f9e513894d64f9a6c024c41b10c3 **
+  * First release
 
-  * UNRELEASED
-
- -- Sebastian Boehm <sebastian@sometimesfood.org>  Sun, 28 Aug 2011 10:32:48 +0200
+ -- Sebastian Boehm <sebastian@sometimesfood.org>  Fri, 6 Oct 2011 23:44:21 +0200
