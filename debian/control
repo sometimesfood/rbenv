@@ -11,6 +11,7 @@ Vcs-Browser: https://github.com/sometimesfood/rbenv
 Package: rbenv
 Architecture: all
 Depends: ${misc:Depends}
+Recommends: ruby-build
 Description: simple Ruby version switcher
  rbenv lets you switch between multiple Ruby versions.
  .
