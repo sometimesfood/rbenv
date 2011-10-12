@@ -1,3 +1,10 @@
+rbenv (0.2.1-2) lucid; urgency=low
+
+  * Add ruby-build installation recommendation
+  * Add README.md to package
+
+ -- Sebastian Boehm <sebastian@sometimesfood.org>  Wed, 12 Oct 2011 16:31:01 +0200
+
 rbenv (0.2.1-1) lucid; urgency=low
 
   * First release
